@@ -5,6 +5,7 @@ from bot.services.openai_service import RhymeFinder
 router = Router()
 rhyme_finder = RhymeFinder()
 
+
 @router.message()
 async def find_rhyme(message: types.Message):
     word = message.text.strip()
