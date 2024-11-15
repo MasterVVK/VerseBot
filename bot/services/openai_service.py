@@ -16,7 +16,7 @@ class RhymeFinder:
         response = self.client.chat.completions.create(
             model="gpt-4o",
             messages=[
-                {"role": "system", "content": "Ты помощник, который подбирает рифмы для слов."},
+                {"role": "system", "content": "Ты помощник, который подбирает рифмы для слов. Твои ответы должны содержать только список слов, разделённых запятыми, без лишнего текста."},
                 {"role": "user", "content": f"Подбери рифмы для слова '{word}'."}
             ]
         )
