@@ -1,18 +1,23 @@
-# bot/services/openai_service.py
-import openai
-from typing import List
+from openai import OpenAI
+import os
+from bot.config import OPENAI_API_KEY, PROXY_URL
 
-openai.api_key = 'YOUR_OPENAI_API_KEY'
+os.environ["http_proxy"] = PROXY_URL
+os.environ["https_proxy"] = PROXY_URL
 
-async def get_rhymes_from_openai(word: str) -> List[str]:
-    prompt = f"Подбери слова, которые рифмуются с '{word}'"
-    response = openai.Completion.create(
-        engine="text-davinci-003",
-        prompt=prompt,
-        max_tokens=50,
-        n=1,
-        stop=None,
-        temperature=0.7
-    )
-    rhymes = response.choices[0].text.strip().split(',')
-    return [rhyme.strip() for rhyme in rhymes]
+class RhymeFinder:
+    def __init__(self):
+        # Установка ключа API
+        openai_key = OPENAI_API_KEY
+        # Настройка прокси
+        self.client = OpenAI(api_key=openai_key)
+
+    async def get_rhymes(self, word: str):
+        response = self.client.chat.completions.create(
+            model="gpt-4o",
+            messages=[
+                {"role": "system", "content": "Ты помощник, который подбирает рифмы для слов."},
+                {"role": "user", "content": f"Подбери рифмы для слова '{word}'."}
+            ]
+        )
+        return response.choices[0].message.content.strip().split(',')
