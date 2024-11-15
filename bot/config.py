@@ -8,6 +8,7 @@ TELEGRAM_BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 PROXY_URL = os.getenv("PROXY_URL")
 YANDEX_API_KEY = os.getenv("YANDEX_API_KEY")
+GIGACHAT_API_KEY = os.getenv("GIGACHAT_API_KEY")
 
 # Проверка на наличие необходимых токенов
 if not TELEGRAM_BOT_TOKEN or not OPENAI_API_KEY:
