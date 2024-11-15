@@ -14,6 +14,10 @@ gigachat_finder = GigaChatRhymeFinder()
 async def find_rhyme(message: types.Message):
     word = message.text.strip()
     await message.answer("Ищу рифмы для вашего слова...")
+    # Проверка на одно слово
+    if len(word.split()) > 1:
+        await message.answer("Пожалуйста, отправьте только одно слово для подбора рифм.")
+        return
 
     # Асинхронный вызов всех сервисов
     openai_rhymes = await openai_finder.get_rhymes(word)
