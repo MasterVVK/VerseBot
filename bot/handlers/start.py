@@ -6,4 +6,4 @@ router = Router()
 
 @router.message(Command(commands=["start"]))
 async def cmd_start(message: types.Message):
-    await message.answer("Привет! Я VerseBot, помогу найти рифмы для слов. Просто отправь мне слово, и я подберу рифмы.")
+    await message.answer("Привет! Я Рифмач, помогу найти рифмы для слов. Просто отправь мне слово, и я подберу рифмы.")
