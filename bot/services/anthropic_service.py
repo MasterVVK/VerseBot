@@ -16,28 +16,36 @@ class RhymeFinder:
 
     async def get_rhymes(self, word: str):
         headers = {
-            "Authorization": f"Bearer {ANTHROPIC_API_KEY}",
-            "Content-Type": "application/json"
+            "x-api-key": ANTHROPIC_API_KEY,
+            "anthropic-version": "2023-06-01",
+            "content-type": "application/json"
         }
         payload = {
-            "prompt": f"Ты помощник, который подбирает рифмы для слова '{word}'. Ответ должен быть списком слов, разделённых запятыми, без лишнего текста. Не более 5 слов.",
-            "model": "claude-2",  # Проверьте актуальность модели
-            "max_tokens_to_sample": 200,
-            "temperature": 0.7
+            "model": "claude-3-5-sonnet-20241022",  # Убедитесь, что модель доступна
+            "max_tokens": 100,
+            "messages": [
+                {
+                    "role": "user",
+                    "content": f"Подбери рифмы для слова '{word}'. Ответ должен быть списком слов, разделённых запятыми, без лишнего текста. Не более 5 слов."
+                }
+            ]
         }
 
-        # Отладка
-        print(f"URL запроса: {self.client.base_url}/completions")
-        print(f"Payload: {payload}")
-
         try:
-            response = await self.client.post("/completions", headers=headers, json=payload)
+            # Отправка запроса к Anthropic API
+            response = await self.client.post("/messages", headers=headers, json=payload)
 
             if response.status_code == 200:
                 data = response.json()
-                rhymes = data.get("completion", "").strip().split(",")
-                cleaned_rhymes = [rhyme.strip() for rhyme in rhymes if rhyme.strip()]
-                return cleaned_rhymes
+                # Извлечение текста из поля content
+                content_list = data.get("content", [])
+                if content_list and content_list[0].get("type") == "text":
+                    rhymes = content_list[0].get("text", "").strip().split(",")
+                    cleaned_rhymes = [rhyme.strip() for rhyme in rhymes if rhyme.strip()]
+                    return cleaned_rhymes
+                else:
+                    print("Ошибка: Неверный формат ответа.")
+                    return []
             else:
                 print(f"Ошибка: {response.status_code}, {response.text}")
                 return []
