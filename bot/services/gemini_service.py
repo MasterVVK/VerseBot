@@ -32,8 +32,8 @@ class RhymeFinder:
             response = await self.client.post(self.base_url, headers=headers, params=params, json=payload)
 
             # Печать ответа для отладки
-            print(f"Response Status: {response.status_code}")
-            print(f"Response Body: {response.text}")
+            #print(f"Response Status: {response.status_code}")
+            #print(f"Response Body: {response.text}")
 
             if response.status_code == 200:
                 data = response.json()
