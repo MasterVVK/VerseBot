@@ -35,10 +35,10 @@ async def find_rhyme(message: types.Message):
 
     # Формирование ответа
     response = "Результаты:\n"
-    #response += f"ChatGPT gpt-4o: {', '.join(openai_rhymes) if openai_rhymes else 'Не удалось найти рифмы'}\n"
-    #response += f"YandexGPT 4 Pro RC: {', '.join(yandex_rhymes) if yandex_rhymes else 'Не удалось найти рифмы'}\n"
-    #response += f"GigaChat-Pro: {', '.join(gigachat_rhymes) if gigachat_rhymes else 'Не удалось найти рифмы'}\n"
-    #response += f"Anthropic Claude-3-5-sonnet: {', '.join(anthropic_rhymes) if anthropic_rhymes else 'Не удалось найти рифмы'}"
-    response += f"Google Gemini: {', '.join(gemini_rhymes) if gemini_rhymes else 'Не удалось найти рифмы'}"
+    response += f"ChatGPT gpt-4o: {', '.join(openai_rhymes) if openai_rhymes else 'Не удалось найти рифмы'}\n"
+    response += f"Anthropic Claude-3-5-sonnet: {', '.join(anthropic_rhymes) if anthropic_rhymes else 'Не удалось найти рифмы'}\n"
+    response += f"YandexGPT 4 Pro RC: {', '.join(yandex_rhymes) if yandex_rhymes else 'Не удалось найти рифмы'}\n"
+    response += f"GigaChat-Pro: {', '.join(gigachat_rhymes) if gigachat_rhymes else 'Не удалось найти рифмы'}\n"
+    response += f"Google gemini-1.5-flash: {', '.join(gemini_rhymes) if gemini_rhymes else 'Не удалось найти рифмы'}\n"
 
     await message.answer(response)
